@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="20岁自救站 | Adulting Bootcamp：从巨婴到成年人，系统化技能、实战任务与成长测评。">
+  <title>20岁自救站 | Adulting Bootcamp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+    :root {
+      color-scheme: light;
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .hero-bg {
+      background: linear-gradient(rgba(10, 20, 14, 0.6), rgba(16, 26, 14, 0.9)), url('https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      min-height: 85vh;
+    }
+    .skill-node {
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .skill-node:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 22px 45px -18px rgba(15, 23, 42, 0.35);
+    }
+    .modal {
+      animation: modalPop 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    @keyframes modalPop {
+      from { transform: translateY(18px) scale(0.92); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .section-divider::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 180px;
+      height: 4px;
+      background: linear-gradient(90deg, #22c55e, #14b8a6);
+      transform: translateX(-50%);
+      border-radius: 999px;
+    }
+    .focus-ring:focus-visible {
+      outline: 3px solid rgba(16, 185, 129, 0.45);
+      outline-offset: 4px;
+    }
+    .modal-backdrop {
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900">
+  <nav class="sticky top-0 z-50 bg-white/95 border-b border-slate-200 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <a href="#top" class="flex items-center gap-3 text-xl font-bold text-slate-900">
+        <span class="inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-emerald-700 text-white shadow-lg">🌱</span>
+        <span>Adulting Bootcamp</span>
+      </a>
+      <div class="hidden gap-8 text-sm md:flex">
+        <a href="#skills" class="hover:text-emerald-700">技能树</a>
+        <a href="#weekly" class="hover:text-emerald-700">本周战役</a>
+        <a href="#community" class="hover:text-emerald-700">社区</a>
+        <a href="#faq" class="hover:text-emerald-700">FAQ</a>
+      </div>
+      <button onclick="openQuiz()" class="inline-flex items-center gap-2 rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-emerald-800 focus-ring">
+        <i class="fas fa-chart-bar"></i> 巨婴指数测试
+      </button>
+    </div>
+  </nav>
+
+  <header id="top" class="hero-bg px-6 py-24 text-white">
+    <div class="mx-auto max-w-6xl text-center">
+      <div class="inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-3 text-sm uppercase tracking-[0.25em] text-slate-100 shadow-sm">成人行为启动营 · 真实成长体验</div>
+      <h1 class="mt-10 text-5xl font-black leading-tight tracking-tight sm:text-6xl md:text-7xl">
+        停止当巨婴，<span class="text-orange-300">开始活成大人</span>
+      </h1>
+      <p class="mx-auto mt-8 max-w-3xl text-lg leading-8 text-slate-200 sm:text-xl">
+        结合理性思考、实际行动与生活技能，打造一个可以落地的「20岁自救计划」。不再空谈成长，而是用任务、工具与反馈，让你真正学会独立、执行和规划未来。
+      </p>
+      <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <button onclick="startBootcamp()" class="inline-flex items-center gap-3 rounded-full bg-white px-8 py-4 text-xl font-bold text-emerald-950 shadow-2xl transition hover:scale-[1.02] hover:bg-slate-100 focus-ring">
+          <i class="fas fa-rocket"></i> 立即启动成人模式
+        </button>
+        <button onclick="openQuiz()" class="inline-flex items-center gap-3 rounded-full border border-white/70 bg-white/10 px-8 py-4 text-xl font-semibold text-white transition hover:bg-white/20 focus-ring">
+          <i class="fas fa-heart-pulse"></i> 先测你的巨婴指数
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="space-y-20 px-6 pb-24 pt-12 md:px-8">
+    <section class="mx-auto max-w-7xl rounded-[2rem] bg-white p-8 shadow-xl lg:p-12">
+      <div class="grid gap-10 lg:grid-cols-[1.5fr_0.9fr] lg:items-start">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-emerald-700">成人技能矩阵</p>
+          <h2 class="mt-4 text-4xl font-bold tracking-tight text-slate-900">从零到一的自救站：4 大成长模块</h2>
+          <p class="mt-6 text-slate-600 leading-relaxed">每个模块都包含核心理念、实战任务与可复制的行动方案。你可以按顺序完成，也可以直接选择当前最需要突破的阶段。</p>
+          <div class="mt-10 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-3xl bg-emerald-50 p-6 shadow-sm">
+              <h3 class="text-xl font-semibold text-emerald-800">01 断奶独立</h3>
+              <p class="mt-3 text-slate-600">与父母划清界限，建立财务与生活自主管理能力。</p>
+            </div>
+            <div class="rounded-3xl bg-amber-50 p-6 shadow-sm">
+              <h3 class="text-xl font-semibold text-amber-800">02 破除文化谎言</h3>
+              <p class="mt-3 text-slate-600">理解「你不是特别的」与「努力比等待更重要」的成年真相。</p>
+            </div>
+            <div class="rounded-3xl bg-violet-50 p-6 shadow-sm">
+              <h3 class="text-xl font-semibold text-violet-800">03 自我锻造</h3>
+              <p class="mt-3 text-slate-600">建立执行力、韧性与真实反馈循环，学会坚持日常习惯。</p>
+            </div>
+            <div class="rounded-3xl bg-sky-50 p-6 shadow-sm">
+              <h3 class="text-xl font-semibold text-sky-800">04 成人导航</h3>
+              <p class="mt-3 text-slate-600">财务、社交、健康与长期规划，打造可持续生活方式。</p>
+            </div>
+          </div>
+        </div>
+        <div id="accountPanel" class="rounded-[2rem] bg-emerald-50 p-8 shadow-xl border border-emerald-100">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-emerald-700">当前账号</p>
+              <h3 id="accountName" class="mt-3 text-3xl font-bold text-slate-900">访客</h3>
+              <p id="accountStatus" class="mt-2 text-slate-600">请登录或注册，启动你的成长进阶。</p>
+            </div>
+            <button id="accountBtn" onclick="openAuthModal()" class="rounded-full bg-white px-5 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-slate-100 focus-ring">登录 / 注册</button>
+          </div>
+          <div id="premiumButtonWrapper" class="mt-4"></div>
+          <div class="mt-8 space-y-5">
+            <div class="rounded-3xl bg-white p-5 shadow-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-500">当前等级</span>
+                <span id="accountLevel" class="text-lg font-bold text-emerald-700">Lv.0</span>
+              </div>
+              <div class="mt-3 h-3 overflow-hidden rounded-full bg-slate-200">
+                <div id="accountXpBar" class="h-3 w-0 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600"></div>
+              </div>
+              <p id="accountXpText" class="mt-2 text-xs text-slate-500">0 / 100 XP</p>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div class="rounded-3xl bg-slate-950 p-5 text-white">
+                <p class="text-sm uppercase tracking-[0.25em] text-slate-400">连续打卡</p>
+                <p id="streakCount" class="mt-4 text-4xl font-bold">0</p>
+              </div>
+              <div class="rounded-3xl bg-slate-950 p-5 text-white">
+                <p class="text-sm uppercase tracking-[0.25em] text-slate-400">社区积分</p>
+                <p id="accountPoints" class="mt-4 text-4xl font-bold">0</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 grid gap-3">
+            <button onclick="dailyCheckIn()" id="checkInBtn" class="rounded-full bg-emerald-700 px-6 py-4 text-white transition hover:bg-emerald-800 focus-ring">每日打卡</button>
+            <button onclick="showSkillTree()" class="rounded-full border border-emerald-700 bg-white px-6 py-4 text-emerald-700 transition hover:bg-emerald-100 focus-ring">打开成长技能树</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="mx-auto max-w-7xl">
+      <div class="relative mb-10 text-center">
+        <h2 class="text-4xl font-bold tracking-tight text-slate-900">成长技能树</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-slate-600">每个节点代表一个成长期任务，解锁它们可以获得成长经验、技能徽章和社群奖励。</p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4 mb-10">
+        <div class="rounded-[2rem] bg-slate-950 p-8 text-white shadow-xl">
+          <div class="text-4xl">🧺</div>
+          <h3 class="mt-6 text-2xl font-bold">生活基础</h3>
+          <p class="mt-4 text-slate-300 leading-relaxed">洗衣服、做饭、整理房间，先把自己的生活照顾好，才能腾出空间成长。</p>
+        </div>
+        <div class="rounded-[2rem] bg-emerald-50 p-8 shadow-xl">
+          <div class="text-4xl">🍳</div>
+          <h3 class="mt-6 text-2xl font-bold text-slate-900">自理能力</h3>
+          <p class="mt-4 text-slate-600 leading-relaxed">学习简单食谱、规划一周菜单、掌握家务流程，让日常变成可复制技能。</p>
+        </div>
+        <div class="rounded-[2rem] bg-sky-50 p-8 shadow-xl">
+          <div class="text-4xl">🏥</div>
+          <h3 class="mt-6 text-2xl font-bold text-slate-900">社保知识</h3>
+          <p class="mt-4 text-slate-600 leading-relaxed">五险一金、医保、公积金、社保缴纳，帮助你把“成年保障”做到位。</p>
+        </div>
+        <div class="rounded-[2rem] bg-amber-50 p-8 shadow-xl">
+          <div class="text-4xl">💼</div>
+          <h3 class="mt-6 text-2xl font-bold text-slate-900">职场准备</h3>
+          <p class="mt-4 text-slate-600 leading-relaxed">优化简历、准备面试、估算收入与税务，让你在职场中更稳健前行。</p>
+        </div>
+      </div>
+      <div id="skillTree" class="grid gap-6 lg:grid-cols-4">
+        <button id="skillNode1" onclick="selectSkillNode(1)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🧾</span><div><p class="text-sm uppercase tracking-[0.3em] text-emerald-600">节点 1</p><h3 class="mt-2 text-xl font-bold">独立宣言</h3></div></div>
+          <p class="mt-4 text-slate-600">写出你的独立底线与行动承诺，完成后自动解锁后续节点。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus1" class="text-sm font-medium text-slate-500">可解锁</span>
+            <span class="text-sm font-semibold text-emerald-600">+20 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress1" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode2" onclick="selectSkillNode(2)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🧺</span><div><p class="text-sm uppercase tracking-[0.3em] text-amber-600">节点 2</p><h3 class="mt-2 text-xl font-bold">洗衣服</h3></div></div>
+          <p class="mt-4 text-slate-600">学会分类衣物、用洗涤剂、控制洗涤程序，保持生活稳定感。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus2" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-amber-600">+18 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress2" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode3" onclick="selectSkillNode(3)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🍳</span><div><p class="text-sm uppercase tracking-[0.3em] text-sky-600">节点 3</p><h3 class="mt-2 text-xl font-bold">做饭</h3></div></div>
+          <p class="mt-4 text-slate-600">完成一份简单饭菜，学会计划食材、掌握时间和营养搭配。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus3" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-sky-600">+18 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress3" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode4" onclick="selectSkillNode(4)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🏠</span><div><p class="text-sm uppercase tracking-[0.3em] text-violet-600">节点 4</p><h3 class="mt-2 text-xl font-bold">生活账单</h3></div></div>
+          <p class="mt-4 text-slate-600">整理房租、水电、网费、餐饮开销，明确每月生活成本。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus4" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-violet-600">+22 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress4" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode5" onclick="selectSkillNode(5)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🏥</span><div><p class="text-sm uppercase tracking-[0.3em] text-emerald-600">节点 5</p><h3 class="mt-2 text-xl font-bold">社保五险一金</h3></div></div>
+          <p class="mt-4 text-slate-600">了解医保、公积金、养老和工伤，知道该如何缴纳与查询权益。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus5" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-emerald-600">+25 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress5" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode6" onclick="selectSkillNode(6)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🧭</span><div><p class="text-sm uppercase tracking-[0.3em] text-amber-600">节点 6</p><h3 class="mt-2 text-xl font-bold">目标拆解</h3></div></div>
+          <p class="mt-4 text-slate-600">把半年目标拆成 4 个可执行子任务。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus6" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-amber-600">+20 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress6" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode7" onclick="selectSkillNode(7)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">📅</span><div><p class="text-sm uppercase tracking-[0.3em] text-sky-600">节点 7</p><h3 class="mt-2 text-xl font-bold">行动日历</h3></div></div>
+          <p class="mt-4 text-slate-600">把计划写进日历，并执行第一项。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus7" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-sky-600">+20 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress7" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode8" onclick="selectSkillNode(8)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🪙</span><div><p class="text-sm uppercase tracking-[0.3em] text-slate-600">节点 8</p><h3 class="mt-2 text-xl font-bold">应急基金</h3></div></div>
+          <p class="mt-4 text-slate-600">制定应急基金计划，并存下第一笔。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus8" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-sky-600">+25 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress8" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode9" onclick="selectSkillNode(9)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">💼</span><div><p class="text-sm uppercase tracking-[0.3em] text-emerald-600">节点 9</p><h3 class="mt-2 text-xl font-bold">职场准备</h3></div></div>
+          <p class="mt-4 text-slate-600">准备简历和面试，评估你的岗位价值与职业路径。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus9" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-emerald-600">+22 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress9" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode10" onclick="selectSkillNode(10)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">💪</span><div><p class="text-sm uppercase tracking-[0.3em] text-amber-600">节点 10</p><h3 class="mt-2 text-xl font-bold">健康习惯</h3></div></div>
+          <p class="mt-4 text-slate-600">安排睡眠、锻炼、饮水及作息，提升日常精力与抗压能力。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus10" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-amber-600">+18 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress10" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode11" onclick="selectSkillNode(11)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">🤝</span><div><p class="text-sm uppercase tracking-[0.3em] text-slate-600">节点 11</p><h3 class="mt-2 text-xl font-bold">人际督促</h3></div></div>
+          <p class="mt-4 text-slate-600">与好友约定每天打卡，练习互相支持与责任分享。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus11" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-slate-600">+16 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress11" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+        <button id="skillNode12" onclick="selectSkillNode(12)" class="skill-node rounded-[2rem] border border-slate-200 bg-white p-6 text-left shadow-sm focus-ring">
+          <div class="flex items-center gap-3"><span class="text-4xl">📈</span><div><p class="text-sm uppercase tracking-[0.3em] text-violet-600">节点 12</p><h3 class="mt-2 text-xl font-bold">复盘报告</h3></div></div>
+          <p class="mt-4 text-slate-600">写出本周复盘，记录收获和下周行动。</p>
+          <div class="mt-4 flex items-center justify-between">
+            <span id="skillStatus12" class="text-sm font-medium text-slate-500">锁定中</span>
+            <span class="text-sm font-semibold text-violet-600">+20 XP</span>
+          </div>
+          <div class="mt-4 rounded-full bg-slate-100 h-3 overflow-hidden"><div id="skillProgress12" class="skill-progress h-3 w-0 rounded-full bg-emerald-500"></div></div>
+        </button>
+      </div>
+    </section>
+
+    <section id="weekly" class="mx-auto max-w-7xl rounded-[2rem] bg-emerald-950 px-6 py-12 text-white shadow-2xl sm:px-10">
+      <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-sm uppercase tracking-[0.3em] text-emerald-300">本周战役</p>
+          <h2 class="mt-4 text-4xl font-bold">财务觉醒周</h2>
+          <p class="mt-4 text-slate-200/90 leading-relaxed">把「财务安全」变成可落地的第一步。三个行动任务，让你在 7 天内获得更强的经济独立感。</p>
+        </div>
+        <div class="space-x-3">
+          <button onclick="openModule(4)" class="rounded-full bg-white px-6 py-3 text-sm font-semibold text-emerald-950 transition hover:bg-slate-100 focus-ring">查看成人导航</button>
+          <button onclick="openQuiz()" class="rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20 focus-ring">重新评估当前状态</button>
+        </div>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <div class="rounded-[2rem] bg-white/10 p-8 backdrop-blur-sm">
+          <span class="inline-flex rounded-full bg-emerald-200/20 px-4 py-2 text-sm font-semibold text-emerald-100">任务①</span>
+          <h3 class="mt-6 text-2xl font-semibold">建立应急基金</h3>
+          <p class="mt-3 text-slate-200/80">目标：存下第一个 2000 元，为人生震荡提前准备缓冲。</p>
+          <button id="taskBtn1" onclick="toggleTask(1)" class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-3xl bg-emerald-600 px-6 py-4 text-sm font-semibold text-white transition hover:bg-emerald-500 focus-ring">我完成了 ✓</button>
+        </div>
+        <div class="rounded-[2rem] bg-white/10 p-8 backdrop-blur-sm">
+          <span class="inline-flex rounded-full bg-emerald-200/20 px-4 py-2 text-sm font-semibold text-emerald-100">任务②</span>
+          <h3 class="mt-6 text-2xl font-semibold">30 天预算表</h3>
+          <p class="mt-3 text-slate-200/80">建立清晰支出表，知道每一笔钱去向哪里，才能避免“月末空空”。</p>
+          <button onclick="downloadBudgetTemplate()" class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-3xl border border-white/20 bg-transparent px-6 py-4 text-sm font-semibold text-white transition hover:border-emerald-300 focus-ring">下载预算模板</button>
+        </div>
+        <div class="rounded-[2rem] bg-white/10 p-8 backdrop-blur-sm">
+          <span class="inline-flex rounded-full bg-emerald-200/20 px-4 py-2 text-sm font-semibold text-emerald-100">任务③</span>
+          <h3 class="mt-6 text-2xl font-semibold">和父母谈话</h3>
+          <p class="mt-3 text-slate-200/80">准备好目标、底线与支持请求，让这次对话成为你成人路上的第一步。</p>
+          <button onclick="showTalkScript()" class="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-3xl bg-emerald-600 px-6 py-4 text-sm font-semibold text-white transition hover:bg-emerald-500 focus-ring">获取沟通话术</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="mx-auto max-w-7xl">
+      <div class="relative mb-10 text-center">
+        <div class="section-divider"></div>
+        <h2 class="mt-8 text-4xl font-bold tracking-tight text-slate-900">成长社区与监督</h2>
+        <p class="mx-auto mt-4 max-w-2xl text-slate-600">让你的目标不再孤单。账号系统支持好友互助、提醒打卡与社区奖励。</p>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-[2rem] bg-white p-8 shadow-md">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-emerald-700">互助挑战</p>
+              <h3 class="mt-4 text-3xl font-bold text-slate-900">好友监督</h3>
+            </div>
+            <div class="text-4xl">🤝</div>
+          </div>
+          <p class="mt-6 text-slate-600 leading-relaxed">邀请好友进入你的成长圈子，互相督促完成目标任务。</p>
+          <div class="mt-8 space-y-4 rounded-3xl bg-slate-50 p-5">
+            <label class="block text-sm font-medium text-slate-700">添加好友</label>
+            <div class="flex gap-3">
+              <input id="friendNameInput" type="text" placeholder="好友用户名" class="w-full rounded-3xl border border-slate-200 px-4 py-3 text-slate-900 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
+              <button onclick="addFriend()" class="rounded-3xl bg-emerald-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-800 focus-ring">添加</button>
+            </div>
+          </div>
+          <div class="mt-6 rounded-[1.75rem] bg-emerald-50 p-6">
+            <p class="text-sm uppercase tracking-[0.3em] text-emerald-700">我的圈子</p>
+            <div id="friendList" class="mt-6 space-y-3"></div>
+          </div>
+        </div>
+        <div class="lg:col-span-2 rounded-[2rem] bg-white p-8 shadow-md">
+          <div class="flex items-center justify-between gap-4">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-emerald-700">行动记录</p>
+              <h3 class="mt-4 text-3xl font-bold text-slate-900">社区动态</h3>
+            </div>
+            <button onclick="openSupportModal()" class="rounded-full border border-emerald-700 bg-emerald-50 px-5 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 focus-ring">给好友发起督促</button>
+          </div>
+          <div id="activityFeed" class="mt-8 space-y-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="premium" class="mx-auto max-w-7xl rounded-[2rem] bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 px-8 py-12 text-white shadow-2xl">
+      <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
+          <p class="text-sm uppercase tracking-[0.3em] text-emerald-300">付费会员专区</p>
+          <h2 class="mt-4 text-4xl font-bold tracking-tight">成为 VIP ，解锁成人力进阶阵营</h2>
+          <p class="mt-6 text-slate-300 leading-relaxed">高级会员可获得专属课程、深度工具包、会员社群以及精选进阶任务。让你的成长不只是“做过”，而是“真的升级”。</p>
+          <div class="mt-8 grid gap-4 sm:grid-cols-2">
+            <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm">
+              <h3 class="text-xl font-semibold text-white">专属课程</h3>
+              <p class="mt-3 text-slate-300">包含社保解读、合同阅读、税后薪资管理、职场谈判与岗位晋升攻略。</p>
+            </div>
+            <div class="rounded-3xl bg-white/10 p-6 backdrop-blur-sm">
+              <h3 class="text-xl font-semibold text-white">付费工具</h3>
+              <p class="mt-3 text-slate-300">独家预算模板、社保自检清单、周复盘模板、成长计划卡片，让行动更简单。</p>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-[2rem] bg-slate-800 p-8 shadow-xl border border-slate-700">
+          <div class="flex items-center justify-between gap-4 rounded-3xl bg-slate-900 p-5">
+            <div>
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-400">VIP 会员</p>
+              <h3 class="mt-2 text-3xl font-bold">¥19.9/ 年</h3>
+            </div>
+            <div class="text-5xl">✨</div>
+          </div>
+          <div class="mt-8 space-y-4">
+            <div class="rounded-3xl bg-slate-950 p-5">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-400">权利一</p>
+              <p class="mt-2 text-slate-200">週刊专属深度课程与成人指南。</p>
+            </div>
+            <div class="rounded-3xl bg-slate-950 p-5">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-400">权利二</p>
+              <p class="mt-2 text-slate-200">一次 1 对 1 成长督导咨询。</p>
+            </div>
+            <div class="rounded-3xl bg-slate-950 p-5">
+              <p class="text-sm uppercase tracking-[0.24em] text-slate-400">权利三</p>
+              <p class="mt-2 text-slate-200">专属社群、打卡挑战与积分兑换机制。</p>
+            </div>
+          </div>
+          <button onclick="openPremiumModal()" class="mt-8 w-full rounded-full bg-emerald-500 px-6 py-4 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400 focus-ring">立即开通 VIP</button>
+          <p class="mt-4 text-sm text-slate-400">已开通会员可直接登录后使用。会员权益将实时显示在左侧账户面板。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="mx-auto max-w-7xl rounded-[2rem] bg-white p-10 shadow-xl">
+      <div class="text-center mb-10">
+        <p class="text-sm font-semibold uppercase tracking-[0.32em] text-emerald-700">常见问题</p>
+        <h2 class="mt-4 text-4xl font-bold text-slate-900">这里你能获得什么？</h2>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div class="rounded-[2rem] border border-slate-200 p-6">
+          <h3 class="text-xl font-semibold text-slate-900">这是考试式学习吗？</h3>
+          <p class="mt-4 text-slate-600">不是。这里强调行动与反思，不是追求分数，而是让你在真实生活中做出改变。</p>
+        </div>
+        <div class="rounded-[2rem] border border-slate-200 p-6">
+          <h3 class="text-xl font-semibold text-slate-900">需要花多少时间？</h3>
+          <p class="mt-4 text-slate-600">每天 10-20 分钟即可，坚持 30 天，你会明显感受到独立力的提升。</p>
+        </div>
+        <div class="rounded-[2rem] border border-slate-200 p-6">
+          <h3 class="text-xl font-semibold text-slate-900">如果我没有收入怎么办？</h3>
+          <p class="mt-4 text-slate-600">从节省、预算和能力提升开始。先做好可控范围内的事情，再慢慢扩大自主权。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white py-8">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-6 text-slate-600 md:flex-row md:items-center md:justify-between">
+      <p>© 2026 20岁自救站 · Adulting Bootcamp</p>
+      <div class="flex flex-wrap gap-4 text-sm">
+        <a href="#top" class="hover:text-emerald-700">回到顶部</a>
+        <a href="#weekly" class="hover:text-emerald-700">本周战役</a>
+        <a href="#faq" class="hover:text-emerald-700">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <div id="modal" class="hidden fixed inset-0 z-50 items-center justify-center bg-slate-950/70 modal-backdrop px-4 py-6">
+    <div class="modal w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-200 px-6 py-5">
+        <h3 id="modalTitle" class="text-2xl font-bold text-slate-900"></h3>
+        <button aria-label="关闭弹窗" onclick="closeModal()" class="text-3xl text-slate-400 transition hover:text-slate-700">×</button>
+      </div>
+      <div id="modalContent" class="max-h-[72vh] overflow-y-auto px-6 py-6 text-slate-700"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEYS = {
+      users: 'adultingUsers',
+      current: 'adultingCurrentUser'
+    };
+
+    const skillNodes = {
+      1: { title: '独立宣言', desc: '写出你的独立底线与行动承诺，完成后解锁后续节点。', xp: 20, deps: [] },
+      2: { title: '洗衣服', desc: '学会分类、选择洗涤方式、晾晒与护理，让生活细节变得可控。', xp: 18, deps: [1] },
+      3: { title: '做饭', desc: '完成一份简单菜单，掌握食材准备、节约和营养搭配。', xp: 18, deps: [1] },
+      4: { title: '生活账单', desc: '整理房租、水电、网费和日常消费，明确每月花费结构。', xp: 22, deps: [2, 3] },
+      5: { title: '社保五险一金', desc: '了解医保、养老、失业、工伤、生育和公积金，学会查询与缴纳方式。', xp: 25, deps: [4] },
+      6: { title: '目标拆解', desc: '把半年目标拆成 4 个可执行子任务，并设置检验标准。', xp: 20, deps: [1] },
+      7: { title: '行动日历', desc: '把计划写进日历，并坚持执行第一周的任务。', xp: 20, deps: [6] },
+      8: { title: '应急基金', desc: '制定应急基金计划，并存下第一笔，为意外提供保障。', xp: 25, deps: [4] },
+      9: { title: '职场准备', desc: '优化简历、准备面试、评估收入与福利待遇。', xp: 22, deps: [5] },
+      10: { title: '健康习惯', desc: '安排睡眠、饮食、锻炼和情绪管理，建立稳定体力与精神状态。', xp: 18, deps: [3] },
+      11: { title: '人际督促', desc: '与好友约定打卡、互相提醒，让成长不再孤单。', xp: 16, deps: [4] },
+      12: { title: '复盘报告', desc: '写出本周复盘，记录收获、困难与下周行动。', xp: 20, deps: [7, 8, 9, 10] }
+    };
+
+    const defaultUserTemplate = {
+      username: '',
+      password: '',
+      xp: 0,
+      level: 1,
+      points: 0,
+      streak: 0,
+      lastCheckIn: '',
+      premium: false,
+      premiumSince: '',
+      tasks: { 1: false, 2: false, 3: false },
+      friends: [],
+      feed: [],
+      skillProgress: {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false,
+        9: false,
+        10: false,
+        11: false,
+        12: false
+      },
+      quizHistory: []
+    };
+
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+
+    let users = [];
+    let currentUser = null;
+    let currentQuestion = 0;
+    let score = 0;
+
+    function initApp() {
+      users = JSON.parse(localStorage.getItem(STORAGE_KEYS.users)) || [];
+      const current = JSON.parse(localStorage.getItem(STORAGE_KEYS.current));
+      if (current && current.username) {
+        currentUser = users.find((user) => user.username === current.username) || null;
+      }
+      renderAccountPanel();
+      renderSkillTree();
+      renderCommunity();
+      updateTaskButtons();
+    }
+
+    function saveUsers() {
+      localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
+    }
+
+    function saveCurrentUser() {
+      if (currentUser) {
+        localStorage.setItem(STORAGE_KEYS.current, JSON.stringify({ username: currentUser.username }));
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.current);
+      }
+    }
+
+    function normalizeUser(user) {
+      return {
+        ...defaultUserTemplate,
+        ...user,
+        tasks: { ...defaultUserTemplate.tasks, ...user.tasks },
+        skillProgress: { ...defaultUserTemplate.skillProgress, ...user.skillProgress },
+        friends: Array.isArray(user.friends) ? user.friends : [],
+        feed: Array.isArray(user.feed) ? user.feed : [],
+        quizHistory: Array.isArray(user.quizHistory) ? user.quizHistory : []
+      };
+    }
+
+    function setCurrentUser(user) {
+      currentUser = normalizeUser(user);
+      const stored = users.find((u) => u.username === user.username);
+      if (!stored) {
+        users.push(currentUser);
+      } else {
+        Object.assign(stored, currentUser);
+      }
+      saveUsers();
+      saveCurrentUser();
+      renderAccountPanel();
+      renderSkillTree();
+      renderCommunity();
+      updateTaskButtons();
+    }
+
+    function openAuthModal() {
+      modalTitle.textContent = '账号系统';
+      modalContent.innerHTML = `
+        <div class="grid gap-6 lg:grid-cols-2">
+          <div class="space-y-6">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-slate-500">已有账号</p>
+              <h3 class="mt-3 text-2xl font-bold text-slate-900">登录</h3>
+            </div>
+            <div class="space-y-4 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6">
+              <label class="block text-sm font-medium text-slate-700">用户名</label>
+              <input id="loginUsername" type="text" class="w-full rounded-3xl border border-slate-300 px-4 py-3 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
+              <label class="block text-sm font-medium text-slate-700">密码</label>
+              <input id="loginPassword" type="password" class="w-full rounded-3xl border border-slate-300 px-4 py-3 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
+              <button onclick="submitLogin()" class="w-full rounded-full bg-emerald-700 px-6 py-3 text-white transition hover:bg-emerald-800">登录</button>
+            </div>
+          </div>
+          <div class="space-y-6">
+            <div>
+              <p class="text-sm uppercase tracking-[0.3em] text-slate-500">新用户</p>
+              <h3 class="mt-3 text-2xl font-bold text-slate-900">注册</h3>
+            </div>
+            <div class="space-y-4 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-6">
+              <label class="block text-sm font-medium text-slate-700">用户名</label>
+              <input id="registerUsername" type="text" class="w-full rounded-3xl border border-slate-300 px-4 py-3 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
+              <label class="block text-sm font-medium text-slate-700">密码</label>
+              <input id="registerPassword" type="password" class="w-full rounded-3xl border border-slate-300 px-4 py-3 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
+              <button onclick="submitRegister()" class="w-full rounded-full bg-slate-900 px-6 py-3 text-white transition hover:bg-slate-800">注册</button>
+            </div>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function submitLogin() {
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      if (!username || !password) {
+        alert('请输入用户名和密码');
+        return;
+      }
+      const user = users.find((item) => item.username === username && item.password === password);
+      if (!user) {
+        alert('用户名或密码错误，或请先注册');
+        return;
+      }
+      setCurrentUser(user);
+      closeModal();
+      alert(`欢迎回来，${username}！`);
+    }
+
+    function submitRegister() {
+      const username = document.getElementById('registerUsername').value.trim();
+      const password = document.getElementById('registerPassword').value.trim();
+      if (!username || !password) {
+        alert('请输入用户名和密码进行注册');
+        return;
+      }
+      if (users.some((item) => item.username === username)) {
+        alert('该用户名已被占用，请换一个');
+        return;
+      }
+      const newUser = normalizeUser({ username, password });
+      users.push(newUser);
+      setCurrentUser(newUser);
+      saveUsers();
+      closeModal();
+      alert(`注册成功，欢迎你，${username}！`);
+    }
+
+    function logoutUser() {
+      if (!currentUser) return;
+      currentUser = null;
+      saveCurrentUser();
+      renderAccountPanel();
+      renderSkillTree();
+      renderCommunity();
+      updateTaskButtons();
+      alert('你已退出登录，继续作为访客体验页面');
+    }
+
+    function openSupportModal() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      modalTitle.textContent = '给好友发起督促';
+      modalContent.innerHTML = `
+        <div class="space-y-4">
+          <p class="text-slate-700">请选择一个好友，并发送一条督促消息。</p>
+          <label class="block text-sm font-medium text-slate-700">好友用户名</label>
+          <input id="supportFriendName" class="w-full rounded-3xl border border-slate-300 px-4 py-3 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" />
+          <label class="block text-sm font-medium text-slate-700">督促内容</label>
+          <textarea id="supportMessage" rows="4" class="w-full rounded-3xl border border-slate-300 px-4 py-3 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200" placeholder="今天记得完成你的预算任务"></textarea>
+          <button onclick="sendSupportMessage()" class="w-full rounded-full bg-emerald-700 px-6 py-3 text-white transition hover:bg-emerald-800">发送督促</button>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function sendSupportMessage() {
+      const friendName = document.getElementById('supportFriendName').value.trim();
+      const message = document.getElementById('supportMessage').value.trim();
+      if (!friendName || !message) {
+        alert('请填写好友用户名和督促内容');
+        return;
+      }
+      if (!currentUser.friends.includes(friendName)) {
+        alert('请先添加该好友到你的好友列表');
+        return;
+      }
+      const friend = users.find((user) => user.username === friendName);
+      if (!friend) {
+        alert('好友不存在');
+        return;
+      }
+      const item = { from: currentUser.username, msg: message, date: new Date().toLocaleString(), type: 'support' };
+      friend.feed.unshift(item);
+      currentUser.points += 8;
+      logActivity('你', `向 ${friendName} 发送了督促，获得 8 社区积分。`, 'support');
+      saveUsers();
+      renderCommunity();
+      renderAccountPanel();
+      closeModal();
+      alert('督促已发送');
+    }
+
+    function renderAccountPanel() {
+      const accountName = document.getElementById('accountName');
+      const accountStatus = document.getElementById('accountStatus');
+      const accountLevel = document.getElementById('accountLevel');
+      const accountXpBar = document.getElementById('accountXpBar');
+      const accountXpText = document.getElementById('accountXpText');
+      const accountPoints = document.getElementById('accountPoints');
+      const streakCount = document.getElementById('streakCount');
+      const accountBtn = document.getElementById('accountBtn');
+
+      const premiumWrapper = document.getElementById('premiumButtonWrapper');
+      if (!currentUser) {
+        accountName.textContent = '访客';
+        accountStatus.textContent = '请登录或注册，开启你的成长通道。';
+        accountLevel.textContent = 'Lv.0';
+        accountXpText.textContent = '0 / 100 XP';
+        accountXpBar.style.width = '0%';
+        accountPoints.textContent = '0';
+        streakCount.textContent = '0';
+        accountBtn.textContent = '登录 / 注册';
+        accountBtn.onclick = openAuthModal;
+        if (premiumWrapper) premiumWrapper.innerHTML = '';
+      } else {
+        accountName.textContent = currentUser.username;
+        accountStatus.textContent = currentUser.premium
+          ? `VIP 会员：${currentUser.premiumSince} 起享专属权益。`
+          : `欢迎回来，${currentUser.username}。继续完成你的成长任务。`;
+        accountLevel.textContent = `Lv.${currentUser.level}`;
+        const nextLevel = currentUser.level * 100;
+        accountXpText.textContent = `${currentUser.xp} / ${nextLevel} XP`;
+        accountXpBar.style.width = `${Math.min(100, (currentUser.xp / nextLevel) * 100)}%`;
+        accountPoints.textContent = currentUser.points;
+        streakCount.textContent = currentUser.streak || 0;
+        accountBtn.textContent = '退出登录';
+        accountBtn.onclick = logoutUser;
+        if (premiumWrapper) {
+          premiumWrapper.innerHTML = currentUser.premium
+            ? '<button onclick="openPremiumModal()" class="w-full rounded-full border border-emerald-700 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100 focus-ring">管理会员</button>'
+            : '<button onclick="openPremiumModal()" class="w-full rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-600 focus-ring">开通会员</button>';
+        }
+      }
+    }
+
+    function openQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const questions = getQuestions();
+      const item = questions[currentQuestion];
+      modalTitle.textContent = `巨婴指数测试（第 ${currentQuestion + 1} / ${questions.length} 题）`;
+      modalContent.innerHTML = `
+        <div class="space-y-6">
+          <p class="text-slate-700 text-lg leading-relaxed">${item.q}</p>
+          <div class="grid gap-4 md:grid-cols-3">
+            ${item.a.map((answer, index) => `
+              <button onclick="answerQuestion(${index})" class="rounded-3xl border border-slate-200 bg-slate-50 px-5 py-5 text-left text-base font-medium text-slate-900 transition hover:border-emerald-400 hover:bg-emerald-50 focus-ring">
+                ${answer}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function getQuestions() {
+      return [
+        { q: '你现在是否和父母住在一起？', a: ['独立居住', '和父母住但付部分费用', '完全依赖父母'], s: [0, 4, 8] },
+        { q: '过去一个月你自己做过几次饭？', a: ['几乎每天', '3-10次', '几乎没有'], s: [0, 3, 7] },
+        { q: '你的财务主要由谁掌控？', a: ['自己完全管理', '部分依赖父母', '完全由父母支付'], s: [0, 4, 8] },
+        { q: '当遇到困难时，你最常做的第一件事是？', a: ['自己想办法解决', '问朋友', '找父母'], s: [2, 4, 8] },
+        { q: '你有明确的半年人生目标吗？', a: ['非常清晰', '模糊有一些', '完全没有'], s: [1, 4, 8] },
+        { q: '你会自己处理银行卡、缴费、报税等事务吗？', a: ['全部自己处理', '部分会', '完全不会'], s: [0, 4, 8] },
+        { q: '过去一周你主动社交的次数？', a: ['3次以上', '1-2次', '几乎没有'], s: [2, 5, 8] },
+        { q: '你对未来感到？', a: ['充满计划和期待', '有点迷茫', '非常焦虑或麻木'], s: [2, 5, 9] },
+        { q: '你有自己的收入来源吗？', a: ['稳定收入或兼职', '偶尔有一些', '完全没有'], s: [1, 4, 8] },
+        { q: '你愿意为独立生活吃苦吗？', a: ['愿意', '看情况', '不愿意'], s: [1, 5, 10] }
+      ];
+    }
+
+    function answerQuestion(choice) {
+      const questions = getQuestions();
+      score += questions[currentQuestion].s[choice];
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let level = '';
+      let tone = 'emerald';
+      let advice = '建议从「断奶独立」模块开始，让行动先于情绪。';
+      if (score <= 30) {
+        level = '成熟大人';
+        tone = 'emerald';
+        advice = '你已经有不错独立感，继续稳步提升执行力与财务规划。';
+      } else if (score <= 55) {
+        level = '准大人';
+        tone = 'amber';
+        advice = '你有基础意识，建议把注意力放在行动与习惯上。';
+      } else {
+        level = '重度巨婴';
+        tone = 'red';
+        advice = '先从最基础的独立生活技能开始，做出第一个可执行计划。';
+      }
+      if (currentUser) {
+        currentUser.quizHistory.unshift({ score, level, date: new Date().toLocaleString() });
+        if (currentUser.quizHistory.length > 5) currentUser.quizHistory.pop();
+        saveUsers();
+      }
+      const toneClass = tone === 'red' ? 'text-red-600' : tone === 'amber' ? 'text-amber-600' : 'text-emerald-600';
+      modalTitle.textContent = '巨婴指数结果';
+      modalContent.innerHTML = `
+        <div class="space-y-6 text-center">
+          <div class="text-6xl font-black ${toneClass}">${score}</div>
+          <h3 class="text-3xl font-bold text-slate-900">${level}</h3>
+          <p class="text-slate-600">你的巨婴指数：${score} / ${getQuestions().length * 10}</p>
+          <p class="mx-auto max-w-xl text-slate-700">${advice}</p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <button onclick="closeModal(); showSkillTree()" class="rounded-full bg-emerald-700 px-6 py-4 text-white transition hover:bg-emerald-800 focus-ring">进入技能树学习</button>
+            <button onclick="closeModal()" class="rounded-full border border-slate-200 bg-slate-50 px-6 py-4 text-slate-800 transition hover:bg-slate-100 focus-ring">稍后再看</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function showSkillTree() {
+      document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+      if (!currentUser) {
+        openAuthModal();
+      }
+    }
+
+    function selectSkillNode(id) {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      const node = skillNodes[id];
+      const unlocked = isNodeUnlocked(id);
+      modalTitle.textContent = `技能节点：${node.title}`;
+      modalContent.innerHTML = `
+        <div class="space-y-6">
+          <p class="text-slate-700 text-lg leading-relaxed">${node.desc}</p>
+          <div class="rounded-[1.75rem] bg-slate-50 p-6">
+            <div class="flex items-center justify-between text-slate-600">
+              <span>奖励经验</span>
+              <span>+${node.xp} XP</span>
+            </div>
+            <div class="mt-4 text-slate-600 text-sm">${unlocked ? '该节点可解锁，完成后获得成长奖励。' : '前置任务未完成，先完成依赖节点。'}</div>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <button onclick="completeSkillNode(${id})" class="rounded-full bg-emerald-700 px-6 py-4 text-white transition hover:bg-emerald-800 focus-ring ${unlocked ? '' : 'opacity-60 cursor-not-allowed'}">${currentUser.skillProgress[id] ? '已完成' : '标记为完成'}</button>
+            <button onclick="closeModal()" class="rounded-full border border-slate-200 bg-slate-50 px-6 py-4 text-slate-800 transition hover:bg-slate-100 focus-ring">关闭</button>
+          </div>
+          ${node.deps.length ? `<div class="rounded-3xl bg-white p-5 shadow-sm"><p class="text-sm text-slate-500">依赖节点：</p><ul class="mt-2 list-disc pl-5 text-slate-700">${node.deps.map((dep) => `<li>${skillNodes[dep].title}</li>`).join('')}</ul></div>` : ''}
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function isNodeUnlocked(id) {
+      const node = skillNodes[id];
+      return node.deps.every((dep) => currentUser.skillProgress[dep]);
+    }
+
+    function completeSkillNode(id) {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      const node = skillNodes[id];
+      if (!isNodeUnlocked(id)) {
+        alert('请先完成依赖的前置节点。');
+        return;
+      }
+      if (currentUser.skillProgress[id]) {
+        alert('该节点已完成。');
+        return;
+      }
+      currentUser.skillProgress[id] = true;
+      currentUser.xp += node.xp;
+      currentUser.points += 10;
+      logActivity('你', `完成节点「${node.title}」，获得 ${node.xp} XP 与 10 社区积分。`, 'skill');
+      checkLevelUp();
+      saveUsers();
+      renderAccountPanel();
+      renderSkillTree();
+      renderCommunity();
+      closeModal();
+      alert(`已完成「${node.title}」，继续解锁下一个节点！`);
+    }
+
+    function checkLevelUp() {
+      while (currentUser.xp >= currentUser.level * 100) {
+        currentUser.xp -= currentUser.level * 100;
+        currentUser.level += 1;
+        logActivity('系统', `祝贺你升级到 Lv.${currentUser.level}！`, 'level');
+      }
+    }
+
+    function addFriend() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      const input = document.getElementById('friendNameInput');
+      const friendName = input.value.trim();
+      if (!friendName) {
+        alert('请输入好友用户名');
+        return;
+      }
+      if (friendName === currentUser.username) {
+        alert('不能添加自己为好友');
+        return;
+      }
+      const target = users.find((user) => user.username === friendName);
+      if (!target) {
+        alert('该用户不存在，请邀请好友先注册');
+        return;
+      }
+      if (currentUser.friends.includes(friendName)) {
+        alert('该用户已经是你的好友');
+        return;
+      }
+      currentUser.friends.push(friendName);
+      if (!target.friends.includes(currentUser.username)) {
+        target.friends.push(currentUser.username);
+      }
+      logActivity('系统', `你已添加 ${friendName} 为好友。`, 'friend');
+      saveUsers();
+      renderCommunity();
+      renderAccountPanel();
+      input.value = '';
+      alert('好友添加成功！');
+    }
+
+    function renderSkillTree() {
+      Object.keys(skillNodes).forEach((id) => {
+        const nodeButton = document.getElementById(`skillNode${id}`);
+        const status = document.getElementById(`skillStatus${id}`);
+        const progress = document.getElementById(`skillProgress${id}`);
+        const complete = currentUser && currentUser.skillProgress[id];
+        const unlocked = currentUser ? isNodeUnlocked(Number(id)) : false;
+        nodeButton.classList.toggle('border-emerald-500', complete);
+        nodeButton.classList.toggle('bg-emerald-50', complete);
+        nodeButton.classList.toggle('opacity-60', currentUser ? !unlocked && !complete : true);
+        nodeButton.disabled = currentUser ? !unlocked && !complete : true;
+        status.textContent = complete ? '已完成' : unlocked ? '可解锁' : '前置未完成';
+        status.className = `text-sm font-medium ${complete ? 'text-emerald-700' : unlocked ? 'text-slate-500' : 'text-slate-400'}`;
+        progress.style.width = complete ? '100%' : '0%';
+      });
+    }
+
+    function dailyCheckIn() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      const today = new Date().toISOString().slice(0, 10);
+      if (currentUser.lastCheckIn === today) {
+        alert('今天已打卡，明天继续保持！');
+        return;
+      }
+      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      currentUser.streak = currentUser.lastCheckIn === yesterday ? (currentUser.streak || 0) + 1 : 1;
+      currentUser.lastCheckIn = today;
+      currentUser.xp += 15;
+      currentUser.points += 5;
+      logActivity('你', `完成每日打卡，连续 ${currentUser.streak} 天。`, 'checkin');
+      checkLevelUp();
+      saveUsers();
+      renderAccountPanel();
+      renderCommunity();
+      alert(`打卡成功！连续 ${currentUser.streak} 天，获得 15 XP。`);
+    }
+
+    function renderCommunity() {
+      const friendList = document.getElementById('friendList');
+      const activityFeed = document.getElementById('activityFeed');
+      friendList.innerHTML = '';
+      activityFeed.innerHTML = '';
+
+      if (!currentUser) {
+        friendList.innerHTML = `<div class="rounded-3xl bg-slate-100 p-5 text-slate-600">请登录后查看好友列表与社区动态。</div>`;
+        activityFeed.innerHTML = `<div class="rounded-3xl bg-slate-100 p-5 text-slate-600">请登录后查看你的个人社区动态。</div>`;
+        return;
+      }
+
+      if (currentUser.friends.length === 0) {
+        friendList.innerHTML = `<div class="rounded-3xl bg-slate-100 p-5 text-slate-600">你还没有好友，添加好友一起打卡吧。</div>`;
+      } else {
+        currentUser.friends.forEach((friend) => {
+          const friendItem = document.createElement('div');
+          friendItem.className = 'rounded-3xl bg-slate-100 p-4';
+          friendItem.innerHTML = `
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <p class="text-sm text-slate-500">好友</p>
+                <p class="text-lg font-semibold text-slate-900">${friend}</p>
+              </div>
+              <button onclick="sendFriendSupport('${friend}')" class="rounded-full bg-emerald-700 px-4 py-2 text-xs font-semibold text-white transition hover:bg-emerald-800 focus-ring">督促</button>
+            </div>
+          `;
+          friendList.appendChild(friendItem);
+        });
+      }
+
+      const feedItems = currentUser.feed.length ? currentUser.feed : [{ from: '系统', msg: '完成一个技能节点即可解锁更多社群奖励。', date: new Date().toLocaleString(), type: 'info' }];
+      feedItems.slice(0, 6).forEach((item) => {
+        const feedCard = document.createElement('div');
+        feedCard.className = 'rounded-3xl bg-slate-50 p-5';
+        feedCard.innerHTML = `
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold text-slate-900">${item.from}</p>
+              <p class="text-sm text-slate-500">${item.date}</p>
+            </div>
+            <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700 uppercase">${item.type}</span>
+          </div>
+          <p class="mt-4 text-slate-700">${item.msg}</p>
+        `;
+        activityFeed.appendChild(feedCard);
+      });
+    }
+
+    function sendFriendSupport(friendName) {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      const friend = users.find((user) => user.username === friendName);
+      if (!friend) {
+        alert('好友不存在');
+        return;
+      }
+      if (!currentUser.friends.includes(friendName)) {
+        alert('该用户不在你的好友列表中');
+        return;
+      }
+      const item = { from: currentUser.username, msg: '你收到了好友督促：坚持完成今天的任务！', date: new Date().toLocaleString(), type: 'support' };
+      friend.feed.unshift(item);
+      if (friend.feed.length > 20) friend.feed.pop();
+      currentUser.points += 8;
+      logActivity('你', `向 ${friendName} 发送了督促，获得 8 社区积分。`, 'support');
+      saveUsers();
+      renderCommunity();
+      renderAccountPanel();
+      alert('督促已发送给好友');
+    }
+
+    function openPremiumModal() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      modalTitle.textContent = currentUser.premium ? 'VIP 会员管理' : 'VIP 订阅';
+      modalContent.innerHTML = `
+        <div class="space-y-6">
+          <p class="text-slate-700">${currentUser.premium ? '你已是 VIP 会员，享受专属课程、工具包与社群支持。' : '开通 VIP 会员后，你将获得：全量付费课程、专属工具包、1 对 1 成长督导、会员专属社群和积分加速。'}</p>
+          <div class="rounded-3xl bg-slate-50 p-6 text-slate-900">
+            <p class="font-semibold">VIP 权益</p>
+            <ul class="mt-4 list-disc space-y-2 pl-5">
+              <li>社保及五险一金深度解析课程</li>
+              <li>合同、简历、税后收入与职场加薪工具包</li>
+              <li>专属打卡挑战和会员积分兑换</li>
+              <li>VIP 进阶社区与督导互动</li>
+            </ul>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            ${currentUser.premium ? '<button onclick="closeModal()" class="rounded-full bg-emerald-700 px-6 py-4 text-white transition hover:bg-emerald-800 focus-ring">知道了</button>' : '<button onclick="purchasePremium()" class="rounded-full bg-emerald-700 px-6 py-4 text-white transition hover:bg-emerald-800 focus-ring">立即开通 ￥199/年</button>'}
+            <button onclick="closeModal()" class="rounded-full border border-slate-200 bg-slate-50 px-6 py-4 text-slate-800 transition hover:bg-slate-100 focus-ring">关闭</button>
+          </div>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function purchasePremium() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      currentUser.premium = true;
+      currentUser.premiumSince = new Date().toLocaleDateString();
+      currentUser.points += 50;
+      currentUser.xp += 40;
+      logActivity('系统', '你已开通 VIP 会员，获得专属权益与 50 积分。', 'premium');
+      checkLevelUp();
+      saveUsers();
+      renderAccountPanel();
+      renderCommunity();
+      closeModal();
+      alert('开通成功！会员权益已激活。');
+    }
+
+    function logActivity(from, msg, type) {
+      if (!currentUser) return;
+      currentUser.feed.unshift({ from, msg, date: new Date().toLocaleString(), type });
+      if (currentUser.feed.length > 20) currentUser.feed.pop();
+    }
+
+    function openModule(id) {
+      const moduleContent = {
+        1: {
+          title: '01 断奶独立',
+          content: `<p class="text-lg leading-relaxed text-slate-700">断奶独立意味着你可以自己承担生活责任、表达边界并稳步建立独立能力。</p>
+          <div class="mt-8 grid gap-4 sm:grid-cols-2"><div class="rounded-3xl bg-emerald-50 p-5"><h4 class="font-semibold text-emerald-700">核心行动</h4><ul class="mt-4 list-disc space-y-2 pl-5 text-slate-700"><li>写出你的独立宣言与底线清单。</li><li>制定 3-6 个月搬家/自理计划。</li><li>完成一次独立做饭与家庭预算。</li></ul></div><div class="rounded-3xl bg-slate-950 p-5 text-white"><h4 class="font-semibold text-white">实用建议</h4><p class="mt-4 leading-relaxed">先从“自己负责一项开支”开始，建立真实的金钱与时间管理感。你可以先把父母帮你支付的项目转成你要记账的项目。</p></div></div><button onclick="copyTalkScript()" class="mt-8 inline-flex items-center gap-2 rounded-full bg-emerald-700 px-6 py-4 text-white transition hover:bg-emerald-800">复制和父母谈话话术</button>`
+        },
+        2: {
+          title: '02 破除文化谎言',
+          content: `<p class="text-lg leading-relaxed text-slate-700">成年人的第一课是：你不是特别的，但你可以变得可靠。抛弃“热爱才工作”“顺其自然”的借口，拥抱持续努力。</p><div class="mt-8 rounded-[1.75rem] bg-amber-50 p-7 shadow-sm"><h4 class="text-xl font-semibold text-amber-800">三条核心真相</h4><ul class="mt-4 list-disc space-y-3 pl-5 text-slate-700"><li>普通人持续做正确的事，才会慢慢变得优秀。</li><li>激情通常是你长期努力后的结果，而不是起点。</li><li>稳定的生活能力比“闪耀个性”更能支撑你的未来。</li></ul></div>`
+        },
+        3: {
+          title: '03 自我锻造',
+          content: `<p class="text-lg leading-relaxed text-slate-700">行动力不是天赋，而是结构。用清单、时间块与复盘，把毫无头绪的努力变成可检验的成长。</p><div class="mt-8 grid gap-4 sm:grid-cols-2"><div class="rounded-3xl bg-violet-50 p-5"><h4 class="font-semibold text-violet-700">今日行动</h4><p class="mt-4 text-slate-700">列出今天要完成的 3 件最重要的事，优先完成最难的一项，然后复盘成功与阻碍。</p></div><div class="rounded-3xl bg-slate-950 p-5 text-white"><h4 class="font-semibold text-white">你会得到</h4><p class="mt-4 leading-relaxed">更清晰的日程感、更少的拖延和更强的任务完成率。每天做一点，1 个月后你会看到明显变化。</p></div></div>`
+        },
+        4: {
+          title: '04 成人导航',
+          content: `<p class="text-lg leading-relaxed text-slate-700">成人导航是让你在金钱、人际与健康之间找到平衡，避免“努力了但依然迷茫”的成年焦虑。</p><div class="mt-8 grid gap-4 sm:grid-cols-2"><div class="rounded-3xl bg-sky-50 p-5"><h4 class="font-semibold text-sky-700">必须建立</h4><ul class="mt-4 list-disc space-y-2 pl-5 text-slate-700"><li>至少 3 个月生活费用的应急基金。</li><li>每月固定支出与可变支出的预算表。</li><li>每周一次社交/健康检查清单。</li></ul></div><div class="rounded-3xl bg-slate-950 p-5 text-white"><h4 class="font-semibold text-white">长期提醒</h4><p class="mt-4 leading-relaxed">把“身体、时间、情绪”当成三条重要资产，定期回顾并调整，而不是只盯着成绩和工资。</p></div></div>`
+        }
+      };
+      modalTitle.textContent = moduleContent[id].title;
+      modalContent.innerHTML = moduleContent[id].content;
+      modal.classList.remove('hidden');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function copyTalkScript() {
+      const text = '爸妈，我已经长大了，想开始尝试独立生活。从下个月开始，我会自己承担部分生活费，也会认真准备搬家计划。希望你们能支持我，这是我成长的重要一步。';
+      navigator.clipboard.writeText(text).then(() => {
+        alert('已复制沟通话术，可以粘贴发送或当面使用。');
+      }).catch(() => {
+        alert('复制失败，请手动复制文本。');
+      });
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function toggleTask(id) {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      currentUser.tasks[id] = !currentUser.tasks[id];
+      if (currentUser.tasks[id]) {
+        currentUser.xp += 10;
+        currentUser.points += 5;
+        logActivity('你', `完成任务 ${id}，获得 10 XP 与 5 积分。`, 'task');
+      }
+      checkLevelUp();
+      saveUsers();
+      renderAccountPanel();
+      renderSkillTree();
+      renderCommunity();
+      updateTaskButtons();
+    }
+
+    function updateTaskButtons() {
+      [1, 2, 3].forEach((id) => {
+        const btn = document.getElementById(`taskBtn${id}`);
+        if (!btn) return;
+        const completed = currentUser ? currentUser.tasks[id] : false;
+        btn.textContent = completed ? `已完成 ✓` : id === 2 ? '下载预算模板' : '我完成了 ✓';
+        btn.className = completed ? 'mt-8 inline-flex w-full items-center justify-center gap-2 rounded-3xl bg-slate-300 px-6 py-4 text-sm font-semibold text-slate-900 transition hover:bg-slate-200 focus-ring' : 'mt-8 inline-flex w-full items-center justify-center gap-2 rounded-3xl bg-emerald-600 px-6 py-4 text-sm font-semibold text-white transition hover:bg-emerald-500 focus-ring';
+      });
+    }
+
+    function downloadBudgetTemplate() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      const csv = '分类,金额,备注\n房租,\n伙食,\n交通,\n通讯,\n学习,\n储蓄,\n其他,';
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = '30天预算模板.csv';
+      link.click();
+      URL.revokeObjectURL(url);
+      currentUser.tasks[2] = true;
+      currentUser.xp += 15;
+      currentUser.points += 8;
+      logActivity('你', '下载了预算模板并完成任务 2。', 'task');
+      checkLevelUp();
+      saveUsers();
+      renderAccountPanel();
+      renderCommunity();
+      updateTaskButtons();
+    }
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    initApp();
+  </script>
+</body>
+</html>
